@@ -109,9 +109,9 @@ def actual_prediction(key_word):
     print(fire)
     fire = fire*ender
     print(fire)
-    df1 = pd.DataFrame({"a":["2021-01-04","2021-01-05","2021-01-06","2021-01-07",
-                            "2021-01-08","2021-01-11","2021-01-12","2021-01-13",
-                            "2021-01-14","2021-01-15","2021-01-22"],
+    df1 = pd.DataFrame({"a":["01-04","01-05","01-06","01-07",
+                            "01-08","01-11","01-12","01-13",
+                            "01-14","01-15","01-22"],
                             "b":[float(eat.loc['2021-01-04','Adj Close']),float(eat.loc['2021-01-05','Adj Close']),
                             float(eat.loc['2021-01-06','Adj Close']),float(eat.loc['2021-01-07','Adj Close']),
                             float(eat.loc['2021-01-08','Adj Close']),float(eat.loc['2021-01-11','Adj Close']),
