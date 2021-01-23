@@ -1,5 +1,8 @@
-Example Stock Tickers:
+Example Stock Tickers: 
+
 MSFT - Microsoft Corporation
+AMD - Advanced Micro Devices, Inc.
+DIS - Disney
 AAPL - Apple Inc
 WORK - Slack Technologies
 AMD - Advanced Micro Devices, Inc.
