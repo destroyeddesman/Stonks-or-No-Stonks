@@ -21,17 +21,17 @@ def get_searches(key_word):
     pytrends = TrendReq(hl='en-US', tz=360)
     pytrends.build_payload([key_word], cat=0, timeframe='2020-01-01 2021-01-15',  gprop='',geo='')
     df = pytrends.interest_over_time()
-    
+
     print(df.head())
-    
+
     sns.set()
     df['timestamp'] = pd.to_datetime(df.index)
     sns.lineplot(x=df['timestamp'], y=df[key_word])
-    
+
     plt.title("Normalized Searches for {}".format(key_word))
     plt.ylabel("Number of Searches")
     plt.xlabel("Date")
-    plt.show()
+    plt.savefig("template/static/images/search.png")
     plt.close()
 
 
@@ -49,32 +49,33 @@ def get_finance(key_word):
 # Define the labels for x-axis and y-axis
     plt.ylabel('Adjusted Close Price', fontsize=14)
     plt.xlabel('Date', fontsize=14)
-    plt.show()
+    plt.savefig('template/static/images/finance.png')
     plt.close()
-    
+
 def prediction(key_word):
     pytrends = TrendReq(hl='en-US', tz=360)
     pytrends.build_payload([key_word], cat=0, timeframe='2021-01-01 2021-01-15',  gprop='',geo='')
     df = pytrends.interest_over_time()
-    
+
     std = pd.DataFrame.from_dict(df)
-    
+
     std['Moving Average'] = std[key_word].rolling(2).mean()
     std[[key_word,'Moving Average']].plot(figsize=(10,4))
     plt.grid(True)
     plt.title(key_word +" Google Trends" ' Moving Averages')
     plt.axis('tight')
     plt.ylabel('Searches')
-    plt.show()
+    plt.savefig('template/static/images/prediction.png')
+    plt.close()
 
 def actual_prediction(key_word):
     pytrends = TrendReq(hl='en-US', tz=360)
     pytrends.build_payload([key_word], cat=0, timeframe='2021-01-01 2021-01-15',  gprop='',geo='')
     df = pytrends.interest_over_time()
     std = pd.DataFrame.from_dict(df)
-    
+
     std['Moving Average'] = std[key_word].rolling(2).mean()
-    
+
     close = float(std.loc['2021-01-15','Moving Average'])
     l=[]
     l.append(float(std.loc['2021-01-15','Moving Average']))
@@ -84,15 +85,15 @@ def actual_prediction(key_word):
     l.append(float(std.loc['2021-01-11','Moving Average']))
     l.append(float(std.loc['2021-01-10','Moving Average']))
     l.append(float(std.loc['2021-01-09','Moving Average']))
-    
+
     average =0
     count = 0
     for x in l:
         average = average + x
         count +=1
-    
+
     average  = average /count
-    
+
     ender = (float(std.loc['2021-01-15','Moving Average'])/average)
     print(ender)
     if ender >1.10:
@@ -101,7 +102,7 @@ def actual_prediction(key_word):
         ender = ender *0.85
     elif ender <1.00:
         ender = ender *1.02
-    
+
     df = yf.download(key_word, start='2021-01-01', end='2021-01-16')['Adj Close']
     eat = pd.DataFrame.from_dict(df)
     fire = float(eat.loc['2021-01-15','Adj Close'])
@@ -116,14 +117,13 @@ def actual_prediction(key_word):
                             float(eat.loc['2021-01-08','Adj Close']),float(eat.loc['2021-01-11','Adj Close']),
                             float(eat.loc['2021-01-12','Adj Close']),float(eat.loc['2021-01-13','Adj Close']),
                             float(eat.loc['2021-01-14','Adj Close']),float(eat.loc['2021-01-15','Adj Close']), fire]})
-    
+
     sns.set()
-    
+
     sns.lineplot(x=df1['a'], y=df1['b'])
-    
+
     plt.title("Predicted Stock Price {}".format(key_word))
     plt.ylabel("Price")
     plt.xlabel("Date")
-    plt.plot()
+    plt.savefig('template/static/images/actual.png')
     plt.close()
-    
