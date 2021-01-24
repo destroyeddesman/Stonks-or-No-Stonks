@@ -1,6 +1,8 @@
 import pandas as pd
 from pytrends.request import TrendReq
 import seaborn as sns
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from pandas_datareader import data
 import requests
